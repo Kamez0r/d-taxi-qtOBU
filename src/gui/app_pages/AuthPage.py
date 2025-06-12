@@ -1,5 +1,6 @@
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QPushButton, QLabel, QWidget, QVBoxLayout
+from pyqttoast import Toast, ToastPosition
 
 from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
@@ -25,7 +26,18 @@ class AuthPage(AbstractAppWidget):
 
     def create_btn_login(self):
         btn = QPushButton("LOGIN")
+        btn.clicked.connect(self.login_requested)
         return btn
+
+    def login_requested(self):
+        toast = Toast(self)
+        toast.setDuration(1000)
+        toast.setPosition(ToastPosition.BOTTOM_LEFT)
+        toast.setMaximumOnScreen(5)
+        toast.setPositionRelativeToWidget(self)
+        toast.setTitle("login requested")
+        toast.show()
+        return
 
     def create_btn_logout(self):
         btn = QPushButton("LOGOUT")
