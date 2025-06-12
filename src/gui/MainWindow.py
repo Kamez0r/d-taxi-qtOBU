@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
 
         # Auth page
         self.auth_page = AuthPage(self)
-        self.auth_page.btn_back.connect(self.request_landing_page)
+        self.auth_page.request_back.connect(self.request_landing_page)
         self.central_widget.addWidget(self.auth_page)
 
 
