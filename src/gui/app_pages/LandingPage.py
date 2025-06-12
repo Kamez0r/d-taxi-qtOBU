@@ -34,6 +34,7 @@ class LandingPage(AbstractAppWidget):
         screen_layout = QVBoxLayout()
         screen_layout.addWidget(QLabel("D-TAXI OBU"))
         screen_layout.addWidget(QLabel("Digital-Taxi On Board Unit"))
+        screen_layout.addWidget(QLabel(""))
         screen_layout.addWidget(QLabel("Software Version: xx"))
         screen_layout.addWidget(QLabel("AIRAC: 2606"))
         screen_layout.addWidget(QLabel("Auth Status: Not Connected"))
