@@ -1,3 +1,4 @@
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 
 
@@ -12,6 +13,7 @@ class MainWindow(QMainWindow):
         # Create screen_area (75% width)
         screen_area = QLabel("This is the screen")
         screen_area.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        screen_area.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # Create button_area (25% width)
         button_area = QVBoxLayout()

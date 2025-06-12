@@ -5,7 +5,7 @@ from src.gui.MainWindow import MainWindow
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
-    window.show()
+    window.showFullScreen()
     sys.exit(app.exec())
 
 if __name__ == "__main__":
