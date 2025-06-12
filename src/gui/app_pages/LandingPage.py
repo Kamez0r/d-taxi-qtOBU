@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QLabel, QPushButton
+from PySide6.QtWidgets import QLabel, QPushButton, QWidget, QHBoxLayout, QVBoxLayout
 from PySide6.QtCore import QTimer, Signal
 from pyqttoast import Toast, ToastPosition
 
@@ -18,7 +18,7 @@ class LandingPage(AbstractAppWidget):
 
         screen_area = self.create_screen_area()
 
-        self.btn_map   = self.create_btn_map()
+        btn_map   = self.create_btn_map()
         btn_text   = self.create_btn_text()
         btn_auth   = self.create_btn_auth()
         btn_config = self.create_btn_config()
@@ -26,10 +26,19 @@ class LandingPage(AbstractAppWidget):
 
 
         self.set_screen_area(screen_area)
-        self.set_buttons([self.btn_map, btn_text, btn_auth, btn_config, btn_exit])
+        self.set_buttons([btn_map, btn_text, btn_auth, btn_config, btn_exit])
 
     def create_screen_area(self):
-        screen_area = QLabel("Hello, World!")
+        screen_area = QWidget()
+
+        screen_layout = QVBoxLayout()
+        screen_layout.addWidget(QLabel("Auth Page"))
+        screen_layout.addWidget(QLabel("Auth Page"))
+        screen_layout.addWidget(QLabel("Auth Page"))
+        screen_layout.addWidget(QLabel("Auth Page"))
+        screen_layout.addWidget(QLabel("Auth Page"))
+
+        screen_area.setLayout(screen_layout)
         return screen_area
 
     def create_btn_map(self):
@@ -69,7 +78,7 @@ class LandingPage(AbstractAppWidget):
         toast.setDuration(1000)
         toast.setPosition(ToastPosition.BOTTOM_LEFT)
         toast.setMaximumOnScreen(5)
-        toast.setPositionRelativeToWidget(self.btn_map)
+        toast.setPositionRelativeToWidget(self)
         toast.setTitle("Exit requested")
         toast.setText("Press [EXIT] " + str(5-self._exit_press_count) + " more times to exit.")
         toast.show()
