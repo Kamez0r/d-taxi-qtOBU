@@ -37,8 +37,10 @@ class LandingPage(AbstractAppWidget):
         screen_layout.addWidget(QLabel("Software Version: xx"))
         screen_layout.addWidget(QLabel("AIRAC: 2606"))
         screen_layout.addWidget(QLabel("Auth Status: Not Connected"))
-        screen_layout.addWidget(QLabel("Username: -"))
-        screen_layout.addWidget(QLabel("Callsign: -"))
+        screen_layout.addWidget(QLabel("Username: CO_TAROM_YRBGL"))
+        screen_layout.addWidget(QLabel("Callsign: ROT123"))
+        screen_layout.addWidget(QLabel("GPS Status: Connected/Simulated/Offline"))
+        screen_layout.addWidget(QLabel("Callsign: Connected/Simulated/Offline"))
 
         screen_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
