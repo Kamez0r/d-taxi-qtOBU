@@ -1,5 +1,5 @@
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMainWindow, QLabel
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QLabel
 
 class MainWindow(QMainWindow):
     def __init__(self):
