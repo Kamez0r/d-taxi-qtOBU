@@ -2,8 +2,8 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QPushButton, QHBoxLayout, QLayout
 
 class AbstractAppWidget(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         self.main_layout = QHBoxLayout()
         self.screen_area = QWidget()

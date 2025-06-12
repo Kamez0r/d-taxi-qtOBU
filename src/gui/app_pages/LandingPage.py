@@ -13,8 +13,8 @@ class LandingPage(AbstractAppWidget):
     _exit_timer = None
 
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
         screen_area = self.create_screen_area()
 
@@ -53,6 +53,7 @@ class LandingPage(AbstractAppWidget):
 
     def create_btn_auth(self):
         btn_auth = QPushButton("AUTH")
+        btn_auth.clicked.connect(self.request_auth.emit)
         return btn_auth
 
     def create_btn_config(self):
