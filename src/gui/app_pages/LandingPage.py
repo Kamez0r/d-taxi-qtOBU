@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QLabel, QPushButton, QWidget, QHBoxLayout, QVBoxLayout
-from PySide6.QtCore import QTimer, Signal
+from PySide6.QtCore import QTimer, Signal, Qt
 from pyqttoast import Toast, ToastPosition
 
 from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
@@ -32,11 +32,15 @@ class LandingPage(AbstractAppWidget):
         screen_area = QWidget()
 
         screen_layout = QVBoxLayout()
-        screen_layout.addWidget(QLabel("Auth Page"))
-        screen_layout.addWidget(QLabel("Auth Page"))
-        screen_layout.addWidget(QLabel("Auth Page"))
-        screen_layout.addWidget(QLabel("Auth Page"))
-        screen_layout.addWidget(QLabel("Auth Page"))
+        screen_layout.addWidget(QLabel("D-TAXI OBU"))
+        screen_layout.addWidget(QLabel("Digital-Taxi On Board Unit"))
+        screen_layout.addWidget(QLabel("Software Version: xx"))
+        screen_layout.addWidget(QLabel("AIRAC: 2606"))
+        screen_layout.addWidget(QLabel("Auth Status: Not Connected"))
+        screen_layout.addWidget(QLabel("Username: -"))
+        screen_layout.addWidget(QLabel("Callsign: -"))
+
+        screen_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         screen_area.setLayout(screen_layout)
         return screen_area
