@@ -57,7 +57,7 @@ class AuthPage(AbstractAppWidget):
         screen_area.setLayout(screen_layout)
 
         fnt = self.font()
-        fnt.setPointSizeF(self.font().pointSizeF() * 3)
+        fnt.setPointSizeF(self.font().pointSizeF() * 2)
         screen_area.setFont(fnt)
 
         return screen_area
