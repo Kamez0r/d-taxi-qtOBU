@@ -67,7 +67,7 @@ class LandingPage(AbstractAppWidget):
 
         toast = Toast(self)
         toast.setDuration(1000)
-        toast.setPosition(ToastPosition.BOTTOM_MIDDLE)
+        toast.setPosition(ToastPosition.BOTTOM_LEFT)
         toast.setMaximumOnScreen(5)
         toast.setPositionRelativeToWidget(self)
         toast.setTitle("Exit requested")
