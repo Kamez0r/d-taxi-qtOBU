@@ -9,9 +9,9 @@ def main():
 
     app.setFont(QFont("Consolas", pointSize=16))
 
-    # window = MainWindow()
+    window = MainWindow()
     window.showFullScreen()
-    window.show()
+    # window.show()
     sys.exit(app.exec())
 
 if __name__ == "__main__":
