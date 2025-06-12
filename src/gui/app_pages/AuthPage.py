@@ -106,10 +106,11 @@ class AuthPage(AbstractAppWidget):
         return btn
 
     def save_credentials(self):
+        # Pre proccess data?
+        self.request_save.emit()
         return
 
     def save_requested(self):
-        # Action to save credentials
         self.save_credentials()
         self.request_back.emit()
         return

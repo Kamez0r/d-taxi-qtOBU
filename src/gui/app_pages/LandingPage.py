@@ -8,6 +8,7 @@ from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 class LandingPage(AbstractAppWidget):
 
     request_auth = Signal()
+    request_config = Signal()
     request_exit = Signal()
     _exit_press_count = None
     _exit_timer = None
@@ -65,7 +66,7 @@ class LandingPage(AbstractAppWidget):
 
     def create_btn_config(self):
         btn_config = QPushButton("CONFIG")
-        btn_config.setDisabled(True)
+        btn_config.clicked.connect(self.request_config.emit)
         return btn_config
 
     def create_btn_exit(self):

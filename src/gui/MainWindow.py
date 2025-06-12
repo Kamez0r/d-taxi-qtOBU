@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import *
 
 from src.gui.app_pages.AuthPage import AuthPage
+from src.gui.app_pages.ConfigPage import ConfigPage
 from src.gui.app_pages.LandingPage import LandingPage
 
 
@@ -14,9 +15,15 @@ class MainWindow(QMainWindow):
 
         # Landing page
         self.landing_page = LandingPage(self)
+        self.landing_page.request_config.connect(self.request_config_page)
         self.landing_page.request_auth.connect(self.request_auth_page)
         self.landing_page.request_exit.connect(self.close)
         self.central_widget.addWidget(self.landing_page)
+
+        # Config page
+        self.config_page = ConfigPage(self)
+        self.config_page.request_back.connect(self.request_landing_page)
+        self.central_widget.addWidget(self.config_page)
 
         # Auth page
         self.auth_page = AuthPage(self)
@@ -29,6 +36,9 @@ class MainWindow(QMainWindow):
 
     def request_landing_page(self):
         self.central_widget.setCurrentWidget(self.landing_page)
+
+    def request_config_page(self):
+        self.central_widget.setCurrentWidget(self.config_page)
 
     def request_auth_page(self):
         self.central_widget.setCurrentWidget(self.auth_page)
