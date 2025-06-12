@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
 
         # Wrap in central widget
         main_widget = LandingPage()
-        main_widget.btn5_triggered.connect(self.close)
+        main_widget.request_exit.connect(self.close)
 
 
         self.setCentralWidget(main_widget)

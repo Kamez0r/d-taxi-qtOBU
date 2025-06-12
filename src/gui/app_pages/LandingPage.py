@@ -4,37 +4,69 @@ from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
 
 class LandingPage(AbstractAppWidget):
-    btn5_triggered = Signal()  # ✅ This signal is emitted after 5 quick presses
+
+    request_auth = Signal()
+    request_exit = Signal()
+    _exit_press_count = None
+    _exit_timer = None
+
 
     def __init__(self):
         super().__init__()
 
-        self._btn5_press_count = 0
-        self._btn5_timer = QTimer(self)
-        self._btn5_timer.setInterval(1000)  # ms — time to reset count
-        self._btn5_timer.setSingleShot(True)
-        self._btn5_timer.timeout.connect(self._reset_btn5_count)
+        screen_area = self.create_screen_area()
 
-        btn1 = QPushButton("MAP")
-        btn2 = QPushButton("TEXT")
-        btn3 = QPushButton("AUTH")
-        btn4 = QPushButton("CONFIG")
-        btn5 = QPushButton("EXIT")
-
-        btn5.clicked.connect(self._handle_btn5_click)
-
-        self.set_screen_area(QLabel("Hello, World!"))
-        self.set_buttons([btn1, btn2, btn3, btn4, btn5])
+        btn_map   = self.create_btn_map()
+        btn_text   = self.create_btn_text()
+        btn_auth   = self.create_btn_auth()
+        btn_config = self.create_btn_config()
+        btn_exit   = self.create_btn_exit()
 
 
-    def _handle_btn5_click(self):
-        self._btn5_press_count += 1
-        self._btn5_timer.start()  # Restart countdown each click
+        self.set_screen_area(screen_area)
+        self.set_buttons([btn_map, btn_text, btn_auth, btn_config, btn_exit])
 
-        if self._btn5_press_count == 5:
-            self._btn5_press_count = 0
-            self._btn5_timer.stop()
-            self.btn5_triggered.emit()  # ✅ Emit signal
+    def create_screen_area(self):
+        screen_area = QLabel("Hello, World!")
+        return screen_area
 
-    def _reset_btn5_count(self):
-        self._btn5_press_count = 0
+    def create_btn_map(self):
+        btn_map = QPushButton("MAP")
+        btn_map.setDisabled(True)
+        return btn_map
+
+    def create_btn_text(self):
+        btn_text = QPushButton("TEXT")
+        btn_text.setDisabled(True)
+        return btn_text
+
+    def create_btn_auth(self):
+        btn_auth = QPushButton("AUTH")
+        return btn_auth
+
+    def create_btn_config(self):
+        btn_config = QPushButton("CONFIG")
+        btn_config.setDisabled(True)
+        return btn_config
+
+    def create_btn_exit(self):
+        btn_exit = QPushButton("EXIT")
+        btn_exit.clicked.connect(self._handle_exit_click)
+        self._exit_press_count = 0
+        self._exit_timer = QTimer(self)
+        self._exit_timer.setInterval(1000)  # ms — time to reset count
+        self._exit_timer.setSingleShot(True)
+        self._exit_timer.timeout.connect(self._reset_exit_count)
+        return btn_exit
+
+    def _handle_exit_click(self):
+        self._exit_press_count += 1
+        self._exit_timer.start()  # Restart countdown each click
+
+        if self._exit_press_count == 5:
+            self._exit_press_count = 0
+            self._exit_timer.stop()
+            self.request_exit.emit()  # ✅ Emit signal
+
+    def _reset_exit_count(self):
+        self._exit_press_count = 0
