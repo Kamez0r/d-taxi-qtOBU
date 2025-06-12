@@ -1,5 +1,7 @@
 from PySide6.QtWidgets import QLabel, QPushButton
 from PySide6.QtCore import QTimer, Signal
+from pyqttoast import Toast, ToastPosition
+
 from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
 
@@ -62,6 +64,15 @@ class LandingPage(AbstractAppWidget):
     def _handle_exit_click(self):
         self._exit_press_count += 1
         self._exit_timer.start()  # Restart countdown each click
+
+        toast = Toast(self)
+        toast.setDuration(1000)
+        toast.setPosition(ToastPosition.BOTTOM_MIDDLE)
+        toast.setMaximumOnScreen(5)
+        toast.setPositionRelativeToWidget(self)
+        toast.setTitle("Exit requested")
+        toast.setText("Press [EXIT] " + str(5-self._exit_press_count) + " more times to exit.")
+        toast.show()
 
         if self._exit_press_count == 5:
             self._exit_press_count = 0
