@@ -33,6 +33,6 @@ class AbstractAppWidget(QWidget):
         for btn in buttons:
             btn.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
             font = self.font()
-            font.setPointSizeF(self.font().pointSizeF() * 2)
+            font.setPointSizeF(self.font().pointSizeF() * 1.8)
             btn.setFont(font)
             self.button_area.addWidget(btn)
