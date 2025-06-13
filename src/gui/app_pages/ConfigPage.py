@@ -39,6 +39,10 @@ class ConfigPage(AbstractAppWidget):
         lbl.setWordWrap(True)
         screen_layout.addWidget(lbl)
 
+        screen_layout.addWidget(QLabel(" "))
+        screen_layout.addWidget(QLabel("GPS Source: Sensor/Simulator/Webview"))
+        screen_layout.addWidget(QLabel("Heading Source Source: Sensor/Simulator/Webview"))
+
         # Populate layout above this
 
         screen_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)

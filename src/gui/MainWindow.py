@@ -3,6 +3,7 @@ from PySide6.QtWidgets import *
 from src.gui.app_pages.AuthPage import AuthPage
 from src.gui.app_pages.ConfigPage import ConfigPage
 from src.gui.app_pages.LandingPage import LandingPage
+from src.gui.app_pages.TextPage import TextPage
 
 
 class MainWindow(QMainWindow):
@@ -15,20 +16,34 @@ class MainWindow(QMainWindow):
 
         # Landing page
         self.landing_page = LandingPage(self)
-        self.landing_page.request_config.connect(self.request_config_page)
+        self.landing_page.request_text.connect(self.request_text_page)
         self.landing_page.request_auth.connect(self.request_auth_page)
+        self.landing_page.request_config.connect(self.request_config_page)
         self.landing_page.request_exit.connect(self.close)
         self.central_widget.addWidget(self.landing_page)
 
-        # Config page
-        self.config_page = ConfigPage(self)
-        self.config_page.request_back.connect(self.request_landing_page)
-        self.central_widget.addWidget(self.config_page)
+        # Text page
+        self.text_page = TextPage(self)
+        # self.text_page.request_taxi.connect(self.?)
+        # self.text_page.request_ack.connect(self.?)
+        # self.text_page.request_recall.connect(self.?)
+        self.text_page.request_back.connect(self.request_landing_page)
+        self.central_widget.addWidget(self.text_page)
 
         # Auth page
         self.auth_page = AuthPage(self)
+        # self.auth_page.request_login.connect(self.?)
+        # self.auth_page.request_logout.connect(self.?)
+        # self.auth_page.request_save.connect(self.?)
         self.auth_page.request_back.connect(self.request_landing_page)
         self.central_widget.addWidget(self.auth_page)
+
+        # Config page
+        self.config_page = ConfigPage(self)
+        # self.config_page.request_save.connect(self.?)
+        self.config_page.request_back.connect(self.request_landing_page)
+        self.central_widget.addWidget(self.config_page)
+
 
 
         self.setCentralWidget(self.central_widget)
@@ -36,6 +51,9 @@ class MainWindow(QMainWindow):
 
     def request_landing_page(self):
         self.central_widget.setCurrentWidget(self.landing_page)
+
+    def request_text_page(self):
+        self.central_widget.setCurrentWidget(self.text_page)
 
     def request_config_page(self):
         self.central_widget.setCurrentWidget(self.config_page)

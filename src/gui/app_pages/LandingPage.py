@@ -7,6 +7,7 @@ from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
 class LandingPage(AbstractAppWidget):
 
+    request_text = Signal()
     request_auth = Signal()
     request_config = Signal()
     request_exit = Signal()
@@ -56,7 +57,7 @@ class LandingPage(AbstractAppWidget):
 
     def create_btn_text(self):
         btn_text = QPushButton("TEXT")
-        btn_text.setDisabled(True)
+        btn_text.clicked.connect(self.request_text.emit)
         return btn_text
 
     def create_btn_auth(self):
