@@ -7,6 +7,7 @@ from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
 class LandingPage(AbstractAppWidget):
 
+    request_map = Signal()
     request_text = Signal()
     request_auth = Signal()
     request_config = Signal()
@@ -52,7 +53,7 @@ class LandingPage(AbstractAppWidget):
 
     def create_btn_map(self):
         btn_map = QPushButton("MAP")
-        btn_map.setDisabled(True)
+        btn_map.clicked.connect(self.request_map.emit)
         return btn_map
 
     def create_btn_text(self):

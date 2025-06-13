@@ -4,10 +4,10 @@ from PySide6.QtWidgets import QPushButton, QVBoxLayout, QWidget, QLabel
 from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
 
-class TextPage(AbstractAppWidget):
+class MapPage(AbstractAppWidget):
     request_taxi = Signal()
     request_ack = Signal()
-    request_recall = Signal()
+    request_manual_release = Signal()
     request_back = Signal()
 
     def __init__(self, parent=None):
@@ -17,13 +17,12 @@ class TextPage(AbstractAppWidget):
 
         self.btn_req = self.create_btn_req()
         self.btn_ack = self.create_btn_ack()
-        self.btn_recall = self.create_btn_recall()
-        btn_blank_4 = QPushButton(" ")
-        btn_blank_4.setDisabled(True)
+        self.btn_manual_release = self.create_btn_manual_release()
+        self.btn_toggle_view = self.create_btn_toggle_view()
         self.btn_back = self.create_btn_back()
 
         self.set_screen_area(screen_area)
-        self.set_buttons([self.btn_req, self.btn_ack, self.btn_recall, btn_blank_4, self.btn_back])
+        self.set_buttons([self.btn_req, self.btn_ack, self.btn_manual_release, self.btn_toggle_view, self.btn_back])
 
 
     def create_btn_req(self):
@@ -43,16 +42,20 @@ class TextPage(AbstractAppWidget):
     def ack_requested(self):
         self.request_ack.emit()
 
-    def create_btn_recall(self):
-        btn = QPushButton("RECALL")
-        btn.clicked.connect(self.recall_requested)
+    def create_btn_manual_release(self):
+        btn = QPushButton("MANUAL RELEASE")
+        btn.clicked.connect(self.manual_release_requested)
         return btn
 
-    def recall_requested(self):
+    def manual_release_requested(self):
         # Pre proccess data?
-        self.request_recall.emit()
+        self.request_manual_release.emit()
         return
 
+    def create_btn_toggle_view(self):
+        btn = QPushButton("TOGGLE VIEW")
+        btn.setDisabled(True)
+        return btn
 
     def create_btn_back(self):
         btn = QPushButton("BACK")
@@ -66,7 +69,7 @@ class TextPage(AbstractAppWidget):
         screen_layout = QVBoxLayout()
 
         # Populate layout bellow this
-        lbl = QLabel("This page is will display message history and should be set as scrollable")
+        lbl = QLabel("This page will be the visual map to navigate with, this will display the taxi route, new instructions etc.")
         lbl.setWordWrap(True)
         screen_layout.addWidget(lbl)
 
