@@ -1,6 +1,7 @@
 from PySide6.QtCore import Qt, QPointF
-from PySide6.QtGui import QWheelEvent, QMouseEvent, QPainter
-from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsTextItem
+from PySide6.QtGui import QWheelEvent, QMouseEvent, QPainter, QPen, QColor
+from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QGraphicsEllipseItem, QGraphicsRectItem, QGraphicsTextItem, \
+    QGraphicsLineItem
 
 
 class MapCanvas(QGraphicsView):
@@ -23,9 +24,9 @@ class MapCanvas(QGraphicsView):
         self.setScene(self.scene)
 
         # Draw example based on threshold coordinates
-        self.draw_thresholds()
-        self.draw_stands()
         self.draw_twys()
+        self.draw_stands()
+        self.draw_thresholds()
 
     def draw_stands(self):
         stands = [
@@ -77,9 +78,27 @@ class MapCanvas(QGraphicsView):
             pt2 = self.geo_to_scene(stop_lat, stop_lon)
 
             radius = 10
-            self.scene.addEllipse(pt1.x() - radius, pt1.y() - radius, radius * 2, radius * 2)
-            self.scene.addEllipse(pt2.x() - radius, pt2.y() - radius, radius * 2, radius * 2)
-            self.scene.addLine(pt1.x(), pt1.y(), pt2.x(), pt2.y())
+            line = QGraphicsLineItem(pt1.x(), pt1.y(), pt2.x(), pt2.y())
+            pnn = QPen()
+            pnn.setWidth(50)
+            pnn.setColor(QColor.fromRgb(120, 120, 120))
+            line.setPen(pnn)
+            self.scene.addItem(line)
+
+        for twy in twys:
+            start_lat = twy[0]
+            start_lon = twy[1]
+            stop_lat = twy[2]
+            stop_lon = twy[3]
+
+            pt1 = self.geo_to_scene(start_lat, start_lon)
+            pt2 = self.geo_to_scene(stop_lat, stop_lon)
+            line = QGraphicsLineItem(pt1.x(), pt1.y(), pt2.x(), pt2.y())
+            pnn = QPen()
+            pnn.setWidth(3)
+            pnn.setColor(QColor.fromRgb(250, 250, 0))
+            line.setPen(pnn)
+            self.scene.addItem(line)
 
     def draw_thresholds(self):
         # Example lat/lon pairs from GeoDEC
@@ -91,11 +110,16 @@ class MapCanvas(QGraphicsView):
 
         # Draw circles at those points
         radius = 10
-        self.scene.addEllipse(pt1.x() - radius, pt1.y() - radius, radius * 2, radius * 2)
-        self.scene.addEllipse(pt2.x() - radius, pt2.y() - radius, radius * 2, radius * 2)
+        # self.scene.addEllipse(pt1.x() - radius, pt1.y() - radius, radius * 2, radius * 2)
+        # self.scene.addEllipse(pt2.x() - radius, pt2.y() - radius, radius * 2, radius * 2)
 
         # Draw a line between them (e.g. runway)
-        self.scene.addLine(pt1.x(), pt1.y(), pt2.x(), pt2.y())
+        line = QGraphicsLineItem(pt1.x(), pt1.y(), pt2.x(), pt2.y())
+        pnn = QPen()
+        pnn.setWidth(80)
+        pnn.setColor(QColor.fromRgb(70,70,70))
+        line.setPen(pnn)
+        self.scene.addItem(line)
 
     def wheelEvent(self, event: QWheelEvent):
         """Zoom on scroll"""
