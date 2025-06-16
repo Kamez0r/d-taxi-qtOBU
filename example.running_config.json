@@ -1,1 +1,8 @@
-{}
+{
+  "gps_source": 0,
+  "heading_source": 0,
+
+  "auth_callsign": "C/S",
+  "auth_icao": "ICAO",
+  "auth_key": "keyx"
+}

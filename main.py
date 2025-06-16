@@ -1,4 +1,5 @@
 import sys
+from wsgiref.simple_server import software_version
 
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QApplication
@@ -12,10 +13,15 @@ def load_data():
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Construct full paths
+    software_version_path = os.path.join(base_dir, 'software_version.txt')
     running_config_path = os.path.join(base_dir, 'running_config.json')
     nav_data_path = os.path.join(base_dir, 'nav_data.json')
     example_running_config_path = os.path.join(base_dir, 'example.running_config.json')
     example_nav_data_path = os.path.join(base_dir, 'example.nav_data.json')
+
+    # Load software_version
+    with open(software_version_path, 'r') as f:
+        software_version = f.readlines()
 
     # Load or create running_config
     if not os.path.exists(running_config_path):
@@ -37,18 +43,22 @@ def load_data():
         with open(nav_data_path, 'r') as f:
             nav_data = json.load(f)
 
-    return running_config, nav_data
+    return software_version, running_config, nav_data
 
 
 
 def main():
-    running_config, nav_data = load_data()
+    software_version, running_config, nav_data = load_data()
 
     app = QApplication(sys.argv)
 
     app.setFont(QFont("Consolas", pointSize=16))
 
-    window = MainWindow()
+    window = MainWindow(
+        software_version = software_version,
+        running_config = running_config,
+        nav_data = nav_data
+    )
     window.showFullScreen()
     # window.show()
     sys.exit(app.exec())

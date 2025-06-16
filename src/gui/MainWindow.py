@@ -8,7 +8,11 @@ from src.gui.app_pages.TextPage import TextPage
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self,
+        software_version,
+        running_config,
+        nav_data
+    ):
         super().__init__()
         self.setWindowTitle("Hello, PyQt")
         self.setMinimumSize(1920, 1080)
