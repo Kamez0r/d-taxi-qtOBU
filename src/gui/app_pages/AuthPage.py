@@ -4,7 +4,7 @@ from pyqttoast import Toast, ToastPosition
 
 from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
-
+# Class Finsihed
 class AuthPage(AbstractAppWidget):
     request_login = Signal()
     request_logout = Signal()
@@ -29,6 +29,11 @@ class AuthPage(AbstractAppWidget):
 
         self.set_screen_area(screen_area)
         self.set_buttons([self.btn_login, self.btn_logout, self.btn_save, self.btn_blank_4, self.btn_back])
+
+    def on_page_changed(self, page_index: int):
+        self.input_callsign.setText(self.running_config["auth_callsign"])
+        self.input_airport.setText(self.running_config["auth_icao"])
+        self.input_auth_key.setText(self.running_config["auth_key"])
 
 
     def create_screen_area(self):
@@ -87,7 +92,6 @@ class AuthPage(AbstractAppWidget):
         toast.show()
 
         self.request_login.emit()
-
         return
 
     def create_btn_logout(self):
@@ -106,7 +110,9 @@ class AuthPage(AbstractAppWidget):
         return btn
 
     def save_credentials(self):
-        # Pre proccess data?
+        self.running_config["auth_callsign"] = self.input_callsign.text()
+        self.running_config["auth_icao"] = self.input_airport.text()
+        self.running_config["auth_key"] = self.input_auth_key.text()
         self.request_save.emit()
         return
 

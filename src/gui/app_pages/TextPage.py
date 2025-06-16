@@ -11,7 +11,7 @@ class TextPage(AbstractAppWidget):
     request_back = Signal()
 
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super().__init__(parent) # TODO further implementation after implementing API object
 
         screen_area = self.create_screen_area()
 

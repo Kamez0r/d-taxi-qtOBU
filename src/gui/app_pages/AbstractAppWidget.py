@@ -1,9 +1,22 @@
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QPushButton, QHBoxLayout, QLayout
+
+from src.gui import MainWindow
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QSizePolicy, QPushButton, QHBoxLayout
+
+
 
 class AbstractAppWidget(QWidget):
-    def __init__(self, parent=None):
+    software_version: str
+    running_config: dict
+    nav_data: dict
+
+    def __init__(self, parent: MainWindow):
         super().__init__(parent)
+
+        self.software_version = parent.software_version
+        self.running_config = parent.running_config
+        self.nav_data = parent.nav_data
+        parent.request_update_running_config.connect(self.on_running_config_changed)
+        parent.central_widget.currentChanged.connect(self.on_page_changed)
 
         self.main_layout = QHBoxLayout()
         self.screen_area = QWidget()
@@ -13,6 +26,12 @@ class AbstractAppWidget(QWidget):
         self.main_layout.addLayout(self.button_area, stretch=1)
 
         self.setLayout(self.main_layout)
+
+    def on_page_changed(self, page_index: int):
+        pass
+
+    def on_running_config_changed(self, new_running_config: dict):
+        pass
 
     def set_screen_area(self, screen_area: QWidget):
         # Remove the old one

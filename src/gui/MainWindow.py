@@ -1,3 +1,4 @@
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import *
 
 from src.gui.app_pages.AuthPage import AuthPage
@@ -8,14 +9,25 @@ from src.gui.app_pages.TextPage import TextPage
 
 
 class MainWindow(QMainWindow):
+
+    request_update_running_config = Signal(dict)
+
+    software_version: str
+    running_config: dict
+    nav_data: dict
+
     def __init__(self,
-        software_version,
-        running_config,
-        nav_data
+        software_version : str,
+        running_config : dict,
+        nav_data : dict
     ):
         super().__init__()
         self.setWindowTitle("Hello, PyQt")
         self.setMinimumSize(1920, 1080)
+
+        self.software_version = software_version
+        self.running_config = running_config
+        self.nav_data = nav_data
 
         self.central_widget = QStackedWidget(self)
 
@@ -48,20 +60,26 @@ class MainWindow(QMainWindow):
         self.auth_page = AuthPage(self)
         # self.auth_page.request_login.connect(self.?)
         # self.auth_page.request_logout.connect(self.?)
-        # self.auth_page.request_save.connect(self.?)
+        self.auth_page.request_save.connect(self.save_current_running_config)
         self.auth_page.request_back.connect(self.request_landing_page)
         self.central_widget.addWidget(self.auth_page)
 
         # Config page
         self.config_page = ConfigPage(self)
-        # self.config_page.request_save.connect(self.?)
+        self.config_page.request_save.connect(self.save_current_running_config)
         self.config_page.request_back.connect(self.request_landing_page)
         self.central_widget.addWidget(self.config_page)
 
 
-
         self.setCentralWidget(self.central_widget)
         self.request_landing_page()
+
+    def save_current_running_config(self):
+        return self.action_save_running_config(self.running_config)
+
+    def action_save_running_config(self, new_running_config):
+        self.running_config = new_running_config
+        self.request_update_running_config.emit(new_running_config)
 
     def request_landing_page(self):
         self.central_widget.setCurrentWidget(self.landing_page)

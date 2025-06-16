@@ -8,20 +8,20 @@ from src.gui.MainWindow import MainWindow
 import json
 import os
 
+# Get the directory where main.py is located
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct full paths
+software_version_path = os.path.join(base_dir, 'software_version.txt')
+running_config_path = os.path.join(base_dir, 'running_config.json')
+nav_data_path = os.path.join(base_dir, 'nav_data.json')
+example_running_config_path = os.path.join(base_dir, 'example.running_config.json')
+example_nav_data_path = os.path.join(base_dir, 'example.nav_data.json')
+
 def load_data():
-    # Get the directory where main.py is located
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct full paths
-    software_version_path = os.path.join(base_dir, 'software_version.txt')
-    running_config_path = os.path.join(base_dir, 'running_config.json')
-    nav_data_path = os.path.join(base_dir, 'nav_data.json')
-    example_running_config_path = os.path.join(base_dir, 'example.running_config.json')
-    example_nav_data_path = os.path.join(base_dir, 'example.nav_data.json')
-
     # Load software_version
     with open(software_version_path, 'r') as f:
-        software_version = f.readlines()
+        software_version = f.readline()
 
     # Load or create running_config
     if not os.path.exists(running_config_path):
@@ -45,7 +45,9 @@ def load_data():
 
     return software_version, running_config, nav_data
 
-
+def save_new_running_config(new_running_config:dict):
+    with open(running_config_path, 'w') as f:
+        json.dump(new_running_config, f, indent=4)
 
 def main():
     software_version, running_config, nav_data = load_data()
@@ -61,6 +63,9 @@ def main():
     )
     window.showFullScreen()
     # window.show()
+
+    window.request_update_running_config.connect(save_new_running_config)
+
     sys.exit(app.exec())
 
 if __name__ == "__main__":
