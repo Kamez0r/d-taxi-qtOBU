@@ -4,7 +4,7 @@ from PySide6.QtWidgets import *
 from src.gui.app_pages.AuthPage import AuthPage
 from src.gui.app_pages.ConfigPage import ConfigPage
 from src.gui.app_pages.LandingPage import LandingPage
-from src.gui.app_pages.MapPage import MapPage
+from src.gui.app_pages.MapPage.MapPage import MapPage
 from src.gui.app_pages.TextPage import TextPage
 
 
