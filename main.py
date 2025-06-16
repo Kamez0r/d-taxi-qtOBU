@@ -8,11 +8,14 @@ import json
 import os
 
 def load_data():
-    # Define file paths
-    running_config_path = 'running_config.json'
-    nav_data_path = 'nav_data.json'
-    example_running_config_path = 'example.running_config.json'
-    example_nav_data_path = 'example.nav_data.json'
+    # Get the directory where main.py is located
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct full paths
+    running_config_path = os.path.join(base_dir, 'running_config.json')
+    nav_data_path = os.path.join(base_dir, 'nav_data.json')
+    example_running_config_path = os.path.join(base_dir, 'example.running_config.json')
+    example_nav_data_path = os.path.join(base_dir, 'example.nav_data.json')
 
     # Load or create running_config
     if not os.path.exists(running_config_path):
@@ -35,6 +38,7 @@ def load_data():
             nav_data = json.load(f)
 
     return running_config, nav_data
+
 
 
 def main():
