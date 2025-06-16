@@ -1,8 +1,8 @@
 {
-  "gps_source": 0,
-  "heading_source": 0,
-
-  "auth_callsign": "C/S",
-  "auth_icao": "ICAO",
-  "auth_key": "keyx"
+    "api_baseurl": "cpdlc.apanescu.ro",
+    "auth_callsign": "ROT123",
+    "auth_icao": "LRTR",
+    "auth_key": "rotbgm",
+    "gps_source": "SIMULATOR",
+    "heading_source": "SIMULATOR"
 }

@@ -15,6 +15,8 @@ class LandingPage(AbstractAppWidget):
     _exit_press_count = None
     _exit_timer = None
 
+    labels: list[dict]
+
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -31,20 +33,48 @@ class LandingPage(AbstractAppWidget):
         self.set_screen_area(screen_area)
         self.set_buttons([btn_map, btn_text, btn_auth, btn_config, btn_exit])
 
+    def init_labels(self):
+        temp = {
+            "Software Version": lambda: self.software_version,
+            "AIRAC": lambda: "26XX",
+            "Auth Status": lambda: "XXXX",
+            "Username": lambda: "CO_TAROM_XXXX",
+            "Callsign": lambda: self.running_config["auth_callsign"],
+            "Airport": lambda: self.running_config["auth_icao"],
+            "Auth Key": lambda: "[HIDDEN]",
+            "GPS Source": lambda: self.running_config["gps_source"],
+            "Heading Source": lambda: self.running_config["heading_source"],
+        }
+
+        self.labels = []
+        for key, value_func in temp.items():
+            value = value_func()  # evaluate once for initial display
+            self.labels.append({
+                "key": key,
+                "value_func": value_func,
+                "widget": QLabel(f"{key}: {value}")
+            })
+
+    def reload_labels(self):
+        for label in self.labels:
+            value = label["value_func"]()  # re-evaluate dynamically
+            label["widget"].setText(f"{label['key']}: {value}")
+
+    def on_page_changed(self, page_index: int):
+        print("on page load")
+        self.reload_labels()
+
     def create_screen_area(self):
         screen_area = QWidget()
+
+        self.init_labels()
 
         screen_layout = QVBoxLayout()
         screen_layout.addWidget(QLabel("D-TAXI OBU"))
         screen_layout.addWidget(QLabel("Digital-Taxi On Board Unit"))
-        screen_layout.addWidget(QLabel(""))
-        screen_layout.addWidget(QLabel("Software Version: xx"))
-        screen_layout.addWidget(QLabel("AIRAC: 2606"))
-        screen_layout.addWidget(QLabel("Auth Status: Not Connected"))
-        screen_layout.addWidget(QLabel("Username: CO_TAROM_YRBGL"))
-        screen_layout.addWidget(QLabel("Callsign: ROT123"))
-        screen_layout.addWidget(QLabel("GPS Status: Connected/Simulated/Offline"))
-        screen_layout.addWidget(QLabel("Callsign: Connected/Simulated/Offline"))
+
+        for label in self.labels:
+            screen_layout.addWidget(label["widget"])
 
         screen_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 

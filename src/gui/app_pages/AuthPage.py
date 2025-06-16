@@ -4,7 +4,6 @@ from pyqttoast import Toast, ToastPosition
 
 from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
 
-# Class Finsihed
 class AuthPage(AbstractAppWidget):
     request_login = Signal()
     request_logout = Signal()
