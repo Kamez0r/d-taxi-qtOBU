@@ -2,6 +2,7 @@ from PySide6.QtCore import Signal, Qt
 from PySide6.QtWidgets import QPushButton, QVBoxLayout, QWidget, QLabel
 
 from src.gui.app_pages.AbstractAppWidget import AbstractAppWidget
+from src.gui.app_pages.MapPage.MapCanvas import MapCanvas
 
 
 class MapPage(AbstractAppWidget):
@@ -73,9 +74,12 @@ class MapPage(AbstractAppWidget):
         lbl.setWordWrap(True)
         screen_layout.addWidget(lbl)
 
-        screen_layout.addWidget(QLabel(" "))
-        screen_layout.addWidget(QLabel(" "))
-        screen_layout.addWidget(QLabel(" "))
+        # screen_layout.addWidget(QLabel(" "))
+        # screen_layout.addWidget(QLabel(" "))
+        # screen_layout.addWidget(QLabel(" "))
+
+        self.map_canvas = MapCanvas(self)
+        screen_layout.addWidget(self.map_canvas)
 
         # Populate layout above this
 
