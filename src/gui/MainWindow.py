@@ -1,6 +1,7 @@
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import *
 
+from src.api.API import API
 from src.gui.app_pages.AuthPage import AuthPage
 from src.gui.app_pages.ConfigPage import ConfigPage
 from src.gui.app_pages.LandingPage import LandingPage
@@ -58,8 +59,8 @@ class MainWindow(QMainWindow):
 
         # Auth page
         self.auth_page = AuthPage(self)
-        # self.auth_page.request_login.connect(self.?)
-        # self.auth_page.request_logout.connect(self.?)
+        self.auth_page.request_login.connect(self._auth_request_login)
+        self.auth_page.request_logout.connect(self._auth_request_logout)
         self.auth_page.request_save.connect(self.save_current_running_config)
         self.auth_page.request_back.connect(self.request_landing_page)
         self.central_widget.addWidget(self.auth_page)
@@ -74,12 +75,21 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
         self.request_landing_page()
 
+        self.api = API(self)
+
+
     def save_current_running_config(self):
         return self.action_save_running_config(self.running_config)
 
     def action_save_running_config(self, new_running_config):
         self.running_config = new_running_config
         self.request_update_running_config.emit(new_running_config)
+
+    def _auth_request_login(self):
+        self.api.call_login(self.auth_page.login_finished)
+
+    def _auth_request_logout(self):
+        self.api.call_logout(self.auth_page.logout_finished)
 
     def request_landing_page(self):
         self.central_widget.setCurrentWidget(self.landing_page)

@@ -93,6 +93,24 @@ class AuthPage(AbstractAppWidget):
         self.request_login.emit()
         return
 
+    def login_finished(self):
+        self.btn_login.setDisabled(True)
+        self.btn_logout.setDisabled(False)
+        self.input_callsign.setDisabled(True)
+        self.input_airport.setDisabled(True)
+        self.input_auth_key.setDisabled(True)
+
+
+        toast = Toast(self)
+        toast.setDuration(2000)
+        toast.setPosition(ToastPosition.BOTTOM_LEFT)
+        toast.setMaximumOnScreen(5)
+        toast.setPositionRelativeToWidget(self)
+        toast.setTitle("Login finished")
+        toast.show()
+
+        return
+
     def create_btn_logout(self):
         btn = QPushButton("LOGOUT")
         btn.setDisabled(True)
@@ -102,6 +120,13 @@ class AuthPage(AbstractAppWidget):
     def logout_requested(self):
         self.btn_logout.setDisabled(True)
         self.request_logout.emit()
+
+    def logout_finished(self):
+        self.btn_login.setDisabled(False)
+        self.btn_logout.setDisabled(True)
+        self.input_callsign.setDisabled(False)
+        self.input_airport.setDisabled(False)
+        self.input_auth_key.setDisabled(False)
 
     def create_btn_save(self):
         btn = QPushButton("SAVE")
